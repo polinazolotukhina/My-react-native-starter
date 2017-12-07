@@ -4,20 +4,21 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { View, Text } from 'react-native';
 import * as actions from './../actions';
+import ListMovie from './ListMovie';
 
 class CinemaMovies extends Component {
     componentWillMount = () => {
         const params = {
-            'primary_release_date.gte': '2014-09-15',
-            'primary_release_date.lte': '2014-10-22'
-        }
+            'primary_release_date.gte': (new Date()).toISOString().split('T')[0]
+        };
         this.props.actions.getMovies(params, '/3/discover/movie?');
     };
-    
+
     render() {
+        const { movies } = this.props;
         return (
             <View>
-                <Text>hi</Text>
+                <ListMovie movie={movies.data.results} />
             </View>
 
         );
